@@ -1,4 +1,9 @@
+echo "Exporting from DB to GeoJSON"
 ogr2ogr -f GeoJSON parcels.geojson  "PG:host=localhost dbname=gis user=${1:-docker} password=${2:-docker}" \
--sql "select id, civic_no || ' ' || streetname address, geom FROM van_parcels" -t_srs "EPSG:4326"; 
+-sql "select id, address, area_sq_metres, geom FROM public.van_parcels_for_export" -t_srs "EPSG:4326"; 
 
-tippecanoe -o parcels.mbtiles --drop-densest-as-needed parcels.geojson -f -z 15 -Z 5 -l default;
+echo "Running Tippecanoe"
+tippecanoe -o parcels.mbtiles parcels.geojson --coalesce-smallest-as-needed -f -z 15 -Z 5 -l default;
+#tippecanoe -o parcels.mbtiles --drop-densest-as-needed parcels.geojson -f -z 15 -Z 5 -l default;
+
+mv -f parcels.mbtiles ../mbtiles-server/parcels.mbtiles
