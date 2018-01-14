@@ -5,7 +5,34 @@ SELECT ST_AsMVT(q, 'test', 4096, 'geom') FROM (SELECT 1 AS c1,
 select *, box2d(geom) from van_parcels limit 10;
 
 
+With dupes as (
+select geom, count(*) from van_parcels vp
+group by geom
+having count(*) > 1
+)
+select * from dupes d
+join van_parcels vp on d.geom = vp.geom
+order by d.geom, vp.civic_no
 
+select * from van_parcels_for_export
+limit 10;
+
+CREATE OR REPLACE VIEW public.van_parcels_for_export AS
+ SELECT vp.id,
+        vp.civic_no || ' ' || vp.streetname address,
+        ST_Area(ST_Transform(geom, utmzone(ST_Centroid(geom)))) area_sq_metres,
+        vp.geom
+ FROM van_parcels vp;
+
+ALTER TABLE public.van_parcels_for_export
+    OWNER TO docker;
+
+
+
+SELECT *, 
+ST_Area(
+ST_Transform(geom, utmzone(ST_Centroid(geom))
+)) AreaSquareMetres
 
 
 SELECT ST_AsMVT(tile) 
