@@ -1,5 +1,5 @@
 echo "Exporting from DB to GeoJSON"
-ogr2ogr -f GeoJSON parcels.geojson  "PG:host=localhost dbname=gis user=${1:-docker} password=${2:-docker}" \
+ogr2ogr -f GeoJSON parcels.geojson  "PG:host=${1:-localhost} dbname=${2:-gis} user=${3:-docker}" \
 -sql "select id, address, area_sq_metres, geom FROM public.van_parcels_for_export" -t_srs "EPSG:4326"; 
 
 echo "Running Tippecanoe"
