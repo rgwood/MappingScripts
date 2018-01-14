@@ -1,3 +1,5 @@
 #Reilly's custom stuff
 *.sqlc
 *.geojson
+*.mbtiles
+*.mbtiles-journal
