@@ -1,0 +1,1 @@
+pg_dump -h localhost -U docker --format=c --file=gisBackup.sqlc gis

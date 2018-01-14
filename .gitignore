@@ -297,3 +297,8 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+
+
+
+#Reilly's custom stuff
+*.sqlc
