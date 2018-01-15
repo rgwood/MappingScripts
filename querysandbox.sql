@@ -1,3 +1,42 @@
+
+select * from property_tax_report
+limit 100
+
+
+create table "property_tax_report" (
+    "pid" text,
+    "legal_type" text,
+    "folio" text,
+    "land_coordinate" text,
+    "zone_name" text,
+    "zone_category" text,
+    "lot" text,
+    "block" text,
+    "plan" text,
+    "district_lot" text,
+    "from_civic_number" text,
+    "to_civic_number" text,
+    "street_name" text,
+    "property_postal_code" text,
+    "narrative_legal_line1" text,
+    "narrative_legal_line2" text,
+    "narrative_legal_line3" text,
+    "narrative_legal_line4" text,
+    "narrative_legal_line5" text,
+    "current_land_value" text,
+    "current_improvement_value" text,
+    "tax_assessment_year" text,
+    "previous_land_value" text,
+    "previous_improvement_value" text,
+    "year_built" text,
+    "big_improvement_year" text,
+    "tax_levy" text,
+    "neighbourhood_code" text
+);
+
+COPY mytable FROM '/path/to/csv/file' WITH CSV HEADER;
+
+
 SELECT ST_AsMVT(q, 'test', 4096, 'geom') FROM (SELECT 1 AS c1,
     ST_AsMVTGeom(ST_GeomFromText('POLYGON ((35 10, 45 45, 15 40, 10 20, 35 10), (20 30, 35 35, 30 20, 20 30))'),
     ST_MakeBox2D(ST_Point(0, 0), ST_Point(4096, 4096)), 4096, 0, false) AS geom) AS q;
